@@ -11,7 +11,7 @@ Presentado por el Grupo 1
 ## INTEGRANTES DEL GRUPO
 
 **Sergio Duran** - legajo: FAI-3603 - email: sergio.duran@est.fi.uncoma.edu.ar - github: sergioduran10
-**Mari Inostroza - legajo: FAI - 33748 - mail:maria.inostroza@est.fi.uncoma.edu.ar - github:mariainos 
+**Maria Inostroza - legajo: FAI - 33748 - mail:maria.inostroza@est.fi.uncoma.edu.ar - github:mariainos 
 
 ## PROFESORES
 
