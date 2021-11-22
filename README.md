@@ -10,8 +10,9 @@ Presentado por el Grupo 1
 
 ## INTEGRANTES DEL GRUPO
 
-**Sergio Duran** - legajo: FAI-3603 - email: sergio.duran@est.fi.uncoma.edu.ar - github: sergioduran10;
-**Celeste Aliaga** - legajo: FAI-3757 - email: celeste.aliaga@est.fi.uncoma.edu.ar - github: wintermaddness
+**Sergio Duran** - legajo: FAI-3603 - email: sergio.duran@est.fi.uncoma.edu.ar - github: sergioduran10
+**Maria Inostroza** - legajo: FAI - 33748 - mail:maria.inostroza@est.fi.uncoma.edu.ar - github:mariainos
+**Celeste Aliaga** - legajo: FAI-3757 - mail:celeste.aliaga@est.fi.uncoma.edu.ar - github: wintermaddness
 
 ## PROFESORES
 
