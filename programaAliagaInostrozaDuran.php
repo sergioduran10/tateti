@@ -10,8 +10,8 @@ include_once("tateti.php");
  * mail: celeste.aliaga@est.fi.uncoma.edu.ar - GitHub: wintermaddness
  * Duran, Sergio - FAI-3603 - Tecn. Univ. Desarrollo Web -
  * mail: sergio.duran@est.fi.uncoma.edu.ar - GitHub: sergioduran10
- * 
- *
+ * Inostroza, Maria - FAI 33748 - Tecnicatura Universitaria en Desarrollo Web -
+ * mail: maria.inostroza@est.fi.uncoma.edu.ar - GitHub: mariainos
  */
 
 /**************************************/
