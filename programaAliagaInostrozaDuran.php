@@ -5,19 +5,14 @@ include_once("tateti.php");
 /***** DATOS DE LOS INTEGRANTES *******/
 /**************************************/
 
-/* Apellido, Nombre. Legajo. Carrera. mail. Usuario Github */
-/* ... COMPLETAR ... */
-
-/**
+/* Apellido, Nombre. Legajo. Carrera. mail. Usuario Github
  * Aliaga, Celeste - FAI-3757 - Tecn. Univ. Desarrollo Web -
- * mail: celeste.aliaga@est.f.uncoma.edu.ar - GitHub: wintermaddness
+ * mail: celeste.aliaga@est.fi.uncoma.edu.ar - GitHub: wintermaddness
  * Duran, Sergio - FAI-3603 - Tecn. Univ. Desarrollo Web -
- * mail: sergio.duran@est.fi.uncoma.edu.ar - Github: sergioduran10
+ * mail: sergio.duran@est.fi.uncoma.edu.ar - GitHub: sergioduran10
  * 
  *
  */
-
-
 
 /**************************************/
 /***** DEFINICION DE FUNCIONES ********/
@@ -99,24 +94,85 @@ function agregarJuego($coleccionJuegos, $juegoNuevo)
     return $coleccionJuegos;
 }
 
+/** Módulo 8: elegirSimbolo - 
+ * Solicita al usuario un simbolo y lo valida antes de retornarlo.
+ * @return string
+ */
+function elegirSimbolo() {
+    //inciso 8 - string $simbolo
+    echo "Elija un símbolo (X-O): ";
+    $simbolo = strtoupper(trim(fgets(STDIN)));
+    while (is_numeric($simbolo) || !($simbolo == "X" || $simbolo == "O")) {
+        echo "ERROR. Elija un símbolo válido (X-O): ";
+        $simbolo = strtoupper(trim(fgets(STDIN)));
+    }
+    return $simbolo;
+}
 
+/** Módulo 9: juegosGanados - 
+ * Recorre la colección de juegos y retorna la cant. de juegos ganados (sin contar los empates).
+ * @param array $arrayJuegos
+ * @return int
+ */
+function juegosGanados($arrayJuegos) {
+    //inciso 9 - int $cantJuegosGanados, $n, $i
+    $cantJuegosGanados = 0;
+    $n = count($arrayJuegos);
+    for ($i=0; $i<$n; $i++) {
+        if ($arrayJuegos[$i]["puntosCruz"] > 1) {
+            $cantJuegosGanados = $cantJuegosGanados + 1;
+        } elseif ($arrayJuegos[$i]["puntosCirculo"] > 1) {
+            $cantJuegosGanados = $cantJuegosGanados + 1;
+        }
+    }
+    return $cantJuegosGanados;
+}
 
-/**************************************/
-/*********** PROGRAMA PRINCIPAL *******/
-/**************************************/
+/** Módulo 10: calcularPorcentaje - 
+ * Contabiliza la cant. de juegos ganados por símbolo y calcula el porcentaje.
+ * @param string $simbolo
+ * @param array $arrayColeccion
+ * @return float
+ */
+function calcularPorcentaje($simbolo, $arrayColeccion) {
+    //inciso 10 - int $n, $i, $cantGanados, $cantGanadosSimboloX, $cantGanadosSimboloO, float $porcentaje
+    $n = count($arrayColeccion);
+    $cantGanados = juegosGanados($arrayColeccion);
+    $cantGanadosSimboloX = 0;
+    $cantGanadosSimboloO = 0;
+    for ($i=0; $i<$n; $i++) {
+        if ($simbolo == "X" && $arrayColeccion[$i]["puntosCruz"] > $arrayColeccion[$i]["puntosCirculo"]) {
+            $cantGanadosSimboloX = $cantGanadosSimboloX + 1;
+            //echo "Cant. X: ".$cantGanadosSimboloX."\n";
+        } elseif ($simbolo == "O" && $arrayColeccion[$i]["puntosCirculo"] > $arrayColeccion[$i]["puntosCruz"]) {
+            $cantGanadosSimboloO = $cantGanadosSimboloO + 1;
+            //echo "Cant. O: ".$cantGanadosSimboloO."\n";
+        }
+    }
+    if ($cantGanadosSimboloX > 0) {
+        $porcentaje = ($cantGanadosSimboloX * 100)/$cantGanados;
+    } elseif ($cantGanadosSimboloO > 0) {
+        $porcentaje = ($cantGanadosSimboloO * 100)/$cantGanados;
+    }
+    return $porcentaje;
+}
+
+/******************************************/
+/*********** PROGRAMA PRINCIPAL ***********/
+/******************************************/
 
 //Declaración de variables:
 /**
  * int $opcion
- * string
- * float
+ * string $simboloElegido
+ * float 
  * boolean $salir
  * array $juego, $partidasGuardadas, 
  */
 
 //Inicialización de variables:
 $salir = true;
-$partidasGuardadas = cargarJuegos(); //la variable almacena los datos de la función que inicializa la coleccionJuegos
+$partidasGuardadas = cargarJuegos(); //la variable almacena los datos de la función que inicializa la coleccion de Juegos
 
 //Proceso:
 do {
@@ -141,7 +197,10 @@ do {
             break;
         case 4:
             //Si el usuario elije la opción 4 - Se muestra el porcentaje de juegos ganados por simbolo elegido (X-O).
-            
+            echo "\n>> PORCENTAJE DE JUEGOS GANADOS POR SIMBOLO (X-O)\n";
+            $simboloElegido = elegirSimbolo();
+            echo "| Símbolo elegido: ".$simboloElegido."\n";
+            echo "Porcentaje de partidas ganadas por ".$simboloElegido.": ".calcularPorcentaje($simboloElegido, $partidasGuardadas)."%\n";
             break;
         case 5:
             //Si el usuario elije la opción 5 - Se muestra el resumen de jugador que se haya ingresado.

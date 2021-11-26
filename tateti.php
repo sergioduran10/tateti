@@ -1,6 +1,5 @@
 <?php
 
-
 /*
 La librería tateti posee la definición de constantes y funciones necesarias
 para jugar al tateti.
@@ -101,13 +100,12 @@ function solicitarCasilleroLibre($tableroTateti)
         $nroColumna = $nroColumna - 1;
         $esLibre = esCasilleroLibre($tableroTateti, $nroFila, $nroColumna);
         if (!$esLibre) {
-            echo "El casillero ingresado se encuentra ocupado! Ingrese un casillero libre.\n";
+            echo "¡El casillero ingresado se encuentra ocupado! Ingrese un casillero libre.\n";
         }
     } while (!$esLibre);
     $casillerolibre = ["fila" => $nroFila, "columna" => $nroColumna];
     return $casillerolibre;
 }
-
 
 /**
  * Retorna el número de fila que ganó el simbolo enviado por parámetro. 
@@ -342,11 +340,11 @@ function imprimirResultado($juego)
 {
     echo "**********************\n";
     if ($juego["puntosCruz"] > $juego["puntosCirculo"]) {
-        echo $juego["jugadorCruz"] . " GANASTE " . $juego["puntosCruz"] . " puntos!!!!!\n";
+        echo "¡".$juego["jugadorCruz"]." GANASTE ".$juego["puntosCruz"]." puntos!\n";
     } elseif ($juego["puntosCruz"] < $juego["puntosCirculo"]) {
-        echo $juego["jugadorCirculo"] . " GANASTE " . $juego["puntosCirculo"] . " puntos!!!!!\n";
+        echo "¡".$juego["jugadorCirculo"]." GANASTE ".$juego["puntosCirculo"]." puntos!\n";
     } else {
-        echo "EMPATE ENTRE " . $juego["jugadorCruz"] . " y " . $juego["jugadorCirculo"] . ". " . $juego["puntosCruz"] . "  puntos para cada uno!!!!!\n";
+        echo "EMPATE ENTRE ".$juego["jugadorCruz"]." y ".$juego["jugadorCirculo"].". ¡".$juego["puntosCruz"]."  puntos para cada uno!\n";
     }
     echo "**********************\n";
 }
@@ -367,7 +365,6 @@ function jugarTurno($tableroTateti, $nombreJugador, $simbolo)
     imprimirTableroTateti($tableroTateti);
     return $tableroTateti;
 }
-
 
 /**
  * Inicia y finaliza un juego de tateti

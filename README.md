@@ -1,6 +1,6 @@
 # tateti
 
-Proyecto php para programar y jugar al tateti en introdución a la programación (FAI)
+Proyecto PHP para programar y jugar al tateti de Introdución a la Programación (FAI)
 
 ## MATERIA
 
