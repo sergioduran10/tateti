@@ -1,9 +1,9 @@
 <?php
 include_once("tateti.php");
 
-/**************************************/
-/***** DATOS DE LOS INTEGRANTES *******/
-/**************************************/
+/***************************************/
+/******* DATOS DE LOS INTEGRANTES ******/
+/***************************************/
 
 /* Apellido, Nombre. Legajo. Carrera. mail. Usuario Github
  * Aliaga, Celeste - FAI-3757 - Tecn. Univ. Desarrollo Web -
@@ -14,9 +14,9 @@ include_once("tateti.php");
  * mail: maria.inostroza@est.fi.uncoma.edu.ar - GitHub: mariainos
  */
 
-/**************************************/
-/***** DEFINICION DE FUNCIONES ********/
-/**************************************/
+/***************************************/
+/******* DEFINICIÓN DE FUNCIONES *******/
+/***************************************/
 
 /** Módulo 1: cargarJuegos -
  * Inicia un arreglo multidimensional con ejemplos de juegos para retornarlos.
@@ -157,9 +157,9 @@ function calcularPorcentaje($simbolo, $arrayColeccion) {
     return $porcentaje;
 }
 
-/******************************************/
-/*********** PROGRAMA PRINCIPAL ***********/
-/******************************************/
+/**********************************/
+/******* PROGRAMA PRINCIPAL *******/
+/**********************************/
 
 //Declaración de variables:
 /**
@@ -172,7 +172,7 @@ function calcularPorcentaje($simbolo, $arrayColeccion) {
 
 //Inicialización de variables:
 $salir = true;
-$partidasGuardadas = cargarJuegos(); //la variable almacena los datos de la función que inicializa la coleccion de Juegos
+$partidasGuardadas = cargarJuegos(); //la variable almacena los datos de la función que inicializa la colección de juegos.
 
 //Proceso:
 do {
@@ -182,7 +182,7 @@ do {
             //Si el usuario elije la opción 1 - Se inicia el juego Tateti.
             echo "\n>> ¡JUGUEMOS AL TA TE TI!\n";
             $juego = jugar();
-            //agregamos una partida nueva a las ya antes guardadas
+            //Se agrega una partida nueva a las ya antes guardadas
             $partidasGuardadas = agregarJuego($partidasGuardadas, $juego);
             //se muestran los resultados de la partida jugada (se invoca una función de tateti.php)
             imprimirResultado($juego);
