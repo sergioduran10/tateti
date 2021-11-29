@@ -10,7 +10,7 @@ include_once("tateti.php");
  * mail: celeste.aliaga@est.fi.uncoma.edu.ar - GitHub: wintermaddness
  * Duran, Sergio - FAI-3603 - Tecn. Univ. Desarrollo Web -
  * mail: sergio.duran@est.fi.uncoma.edu.ar - GitHub: sergioduran10
- * Inostroza, Maria - FAI 33748 - Tecnicatura Universitaria en Desarrollo Web -
+ * Inostroza, Maria - FAI-33748 - Tecn. Univ. Desarrollo Web -
  * mail: maria.inostroza@est.fi.uncoma.edu.ar - GitHub: mariainos
  */
 
@@ -101,7 +101,7 @@ function agregarJuego($coleccionJuegos, $juegoNuevo)
  * @return array
  */
 function resumenJugador($arrayColeccion, $nombreJugador) {
-    //inciso 7 - int $n, $i, $cantGanados, $cantPerdidos, $cantEmpates, array $jugador
+    //inciso 7 - array $jugador, int $n, $i, $cantGanados, $cantPerdidos, $cantEmpates
     //int $cantGanadosJugadorX, $cantGanadosJugadorO, $cantPerdidosJugadorX, $cantPerdidosJugadorO
     //int $cantEmpatesJugadorX, $cantEmpatesJugadorO, $puntosAcumulados
     $n = count($arrayColeccion);
@@ -145,7 +145,7 @@ function resumenJugador($arrayColeccion, $nombreJugador) {
         "juegosGanados" => $cantGanados, //int
         "juegosPerdidos" => $cantPerdidos, //int
         "juegosEmpatados" => $cantEmpates, //int
-        "puntosAcumulados" => $puntosAcumulados, //int
+        "puntosAcumulados" => $puntosAcumulados //int
     ];
     return $jugador;
 }
@@ -212,32 +212,33 @@ function calcularPorcentaje($simbolo, $arrayColeccion) {
     }
     return $porcentaje;
 }
+
 /** Módulo 11: Muestra la coleccion de juegos Ordenado por Jugador O - 
- * Funcion para comparar y devuelve -1, 0, 1
+ * Función para comparar. Devuelve -1, 0, 1 según sea el caso.
  * @param array $a
  * @param array $b
  * @return int
 */
-function comparar($a,$b)
+function comparar($a, $b)
 {
-    //int $resultado
+    //inciso 11 - int $resultado
     $resultado = 0;
-    if ($a['jugadorCirculo'] < $b['jugadorCirculo']){
+    if ($a['jugadorCirculo'] < $b['jugadorCirculo']) {
         $resultado = -1;
-    }elseif ($b['jugadorCirculo'] < $a['jugadorCirculo']){
+    } elseif ($b['jugadorCirculo'] < $a['jugadorCirculo']) {
         $resultado = 1;
     }
     return $resultado;
 }
-/*
- * funcion para ordenar por orden alfabetico los juegos de circulo
- * ordena un array tal que los índices de array mantienen sus correlaciones
- * con los elementos del array con los que están asociados, 
+
+/** Módulo 12: juegosCirculosOrdenados - 
+ * Ordena los juegos alfabéticamente por nombre de jugador O.
+ * UASORT: Ordena un array tal que los índices de este mantienen sus
+ * correlaciones con los elementos del array con los que están asociados, 
  * usando una función de comparación definida por el usuario.
- * @param array
- * @return 
+ * @param array $juegosO
  */
-function juegosCirculosOrdenados ($juegosO){
+function juegosCirculosOrdenados($juegosO) {
     uasort($juegosO, 'comparar');
     print_r($juegosO);
 }
@@ -285,7 +286,7 @@ do {
             //Si el usuario elije la opción 4 - Se muestra el porcentaje de juegos ganados por simbolo elegido (X-O).
             echo "\n>> PORCENTAJE DE JUEGOS GANADOS POR SIMBOLO (X-O)\n";
             $simboloElegido = elegirSimbolo();
-            echo "| Símbolo elegido: ".$simboloElegido."\n";
+            echo "\n| Símbolo elegido: ".$simboloElegido."\n";
             echo "Porcentaje de partidas ganadas por ".$simboloElegido.": ".calcularPorcentaje($simboloElegido, $partidasGuardadas)."%\n";
             break;
         case 5:
@@ -309,7 +310,7 @@ do {
             if ($registro == 1) {
                 $resumen = resumenJugador($partidasGuardadas, $nombre);
                 //print_r($resumen);
-                echo "*************************************\n";
+                echo "\n*************************************\n";
                 echo "Nombre: ".$resumen["nombre"]."\n";
                 echo "Juegos ganados: ".$resumen["juegosGanados"]."\n";
                 echo "Juegos perdidos: ".$resumen["juegosPerdidos"]."\n";
