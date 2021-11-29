@@ -131,9 +131,9 @@ function agregarJuego($coleccionJuegos, $juegoNuevo)
 function primerJuegoGanado($arrayJuegos, $nombreJugador) {
     //inciso 6 - int $i, $n, $indice, boolean $bandera
     $i = 0;
-    $bandera = false;
     $n = count($arrayJuegos);
     $indice = -1;
+    $bandera = false;
     while ($i < $n && $bandera == false) {
         if ($arrayJuegos[$i]["puntosCruz"] > $arrayJuegos[$i]["puntosCirculo"] && strtoupper($arrayJuegos[$i]["jugadorCruz"]) == $nombreJugador) {
             $indice = $i;
@@ -167,6 +167,7 @@ function resumenJugador($arrayColeccion, $nombreJugador) {
     $puntosAcumulados = 0;
     //Se obtiene la cant. de juegos ganados por $nombreJugador:
     for ($i=0; $i<$n; $i++) {
+        //Se contabilizan los juegos ganados, perdidos y empatados del jugador X
         if (strtoupper($arrayColeccion[$i]["jugadorCruz"]) == $nombreJugador) {
             if ($arrayColeccion[$i]["puntosCruz"] > $arrayColeccion[$i]["puntosCirculo"]) {    
                 $cantGanadosJugadorX = $cantGanadosJugadorX + 1;
@@ -177,6 +178,7 @@ function resumenJugador($arrayColeccion, $nombreJugador) {
                 $cantEmpatesJugadorX = $cantEmpatesJugadorX + 1;
                 $puntosAcumulados = $puntosAcumulados + $arrayColeccion[$i]["puntosCruz"];
             }
+        //Se contabilizan los juegos ganados, perdidos y empatados del jugador O
         } elseif (strtoupper($arrayColeccion[$i]["jugadorCirculo"]) == $nombreJugador) {
             if ($arrayColeccion[$i]["puntosCirculo"] > $arrayColeccion[$i]["puntosCruz"]) {
                 $cantGanadosJugadorO = $cantGanadosJugadorO + 1;
@@ -189,6 +191,7 @@ function resumenJugador($arrayColeccion, $nombreJugador) {
             }    
         }
     }
+    //Se suman los resultados:
     $cantGanados = $cantGanadosJugadorX + $cantGanadosJugadorO;
     $cantPerdidos = $cantPerdidosJugadorX + $cantPerdidosJugadorO;
     $cantEmpates = $cantEmpatesJugadorX + $cantEmpatesJugadorO;
@@ -249,15 +252,15 @@ function calcularPorcentaje($simbolo, $arrayColeccion) {
     $cantGanados = juegosGanados($arrayColeccion);
     $cantGanadosSimboloX = 0;
     $cantGanadosSimboloO = 0;
+    //Se contabilizan los juegos ganados por cada símbolo:
     for ($i=0; $i<$n; $i++) {
         if ($simbolo == "X" && $arrayColeccion[$i]["puntosCruz"] > $arrayColeccion[$i]["puntosCirculo"]) {
             $cantGanadosSimboloX = $cantGanadosSimboloX + 1;
-            //echo "Cant. X: ".$cantGanadosSimboloX."\n";
         } elseif ($simbolo == "O" && $arrayColeccion[$i]["puntosCirculo"] > $arrayColeccion[$i]["puntosCruz"]) {
             $cantGanadosSimboloO = $cantGanadosSimboloO + 1;
-            //echo "Cant. O: ".$cantGanadosSimboloO."\n";
         }
     }
+    //Se calcula el porcentaje:
     if ($cantGanadosSimboloX > 0) {
         $porcentaje = ($cantGanadosSimboloX * 100)/$cantGanados;
     } elseif ($cantGanadosSimboloO > 0) {
@@ -267,7 +270,7 @@ function calcularPorcentaje($simbolo, $arrayColeccion) {
 }
 
 /** Módulo 11: comparar - 
- * Función para comparar que acompaña al módulo 12.
+ * Función para comparar dos elementos (que acompaña al módulo 12).
  * Devuelve -1, 0, 1 según sea el caso.
  * @param array $a
  * @param array $b
@@ -289,7 +292,7 @@ function comparar($a, $b)
  * Ordena los juegos alfabéticamente por nombre de jugador O.
  * UASORT: Ordena un array tal que los índices de este mantienen sus
  * correlaciones con los elementos del array con los que están asociados, 
- * usando una función de comparación definida por el usuario.
+ * usando una función de comparación definida por el usuario (módulo 11).
  * @param array $juegosO
  */
 function juegosCirculosOrdenados($juegosO) {
