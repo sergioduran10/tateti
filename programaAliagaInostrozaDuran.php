@@ -94,6 +94,62 @@ function agregarJuego($coleccionJuegos, $juegoNuevo)
     return $coleccionJuegos;
 }
 
+/** Módulo 7: resumenJugador - 
+ * Dado el nombre de un jugador y un arreglo de juegos, la función retorna un resumen de dicho jugador.
+ * @param array $arrayColeccion
+ * @param string $nombreJugador
+ * @return array
+ */
+function resumenJugador($arrayColeccion, $nombreJugador) {
+    //inciso 7 - int $n, $i, $cantGanados, $cantPerdidos, $cantEmpates, array $jugador
+    //int $cantGanadosJugadorX, $cantGanadosJugadorO, $cantPerdidosJugadorX, $cantPerdidosJugadorO
+    //int $cantEmpatesJugadorX, $cantEmpatesJugadorO, $puntosAcumulados
+    $n = count($arrayColeccion);
+    $cantGanadosJugadorX = 0;
+    $cantGanadosJugadorO = 0;
+    $cantPerdidosJugadorX = 0;
+    $cantPerdidosJugadorO = 0;
+    $cantEmpatesJugadorX = 0;
+    $cantEmpatesJugadorO = 0;
+    $puntosAcumulados = 0;
+    //Se obtiene la cant. de juegos ganados por $nombreJugador:
+    for ($i=0; $i<$n; $i++) {
+        if (strtoupper($arrayColeccion[$i]["jugadorCruz"]) == $nombreJugador) {
+            if ($arrayColeccion[$i]["puntosCruz"] > $arrayColeccion[$i]["puntosCirculo"]) {    
+                $cantGanadosJugadorX = $cantGanadosJugadorX + 1;
+                $puntosAcumulados = $puntosAcumulados + $arrayColeccion[$i]["puntosCruz"];
+            } elseif ($arrayColeccion[$i]["puntosCruz"] < $arrayColeccion[$i]["puntosCirculo"]) {
+                $cantPerdidosJugadorX = $cantPerdidosJugadorX + 1;
+            } else {
+                $cantEmpatesJugadorX = $cantEmpatesJugadorX + 1;
+                $puntosAcumulados = $puntosAcumulados + $arrayColeccion[$i]["puntosCruz"];
+            }
+        } elseif (strtoupper($arrayColeccion[$i]["jugadorCirculo"]) == $nombreJugador) {
+            if ($arrayColeccion[$i]["puntosCirculo"] > $arrayColeccion[$i]["puntosCruz"]) {
+                $cantGanadosJugadorO = $cantGanadosJugadorO + 1;
+                $puntosAcumulados = $puntosAcumulados + $arrayColeccion[$i]["puntosCirculo"];
+            } elseif ($arrayColeccion[$i]["puntosCirculo"] < $arrayColeccion[$i]["puntosCruz"]) {
+                $cantPerdidosJugadorO = $cantPerdidosJugadorO + 1;;
+            } else {
+                $cantEmpatesJugadorO = $cantEmpatesJugadorO + 1;
+                $puntosAcumulados = $puntosAcumulados + $arrayColeccion[$i]["puntosCirculo"];
+            }    
+        }
+    }
+    $cantGanados = $cantGanadosJugadorX + $cantGanadosJugadorO;
+    $cantPerdidos = $cantPerdidosJugadorX + $cantPerdidosJugadorO;
+    $cantEmpates = $cantEmpatesJugadorX + $cantEmpatesJugadorO;
+    //Con los resultados, se arma el arreglo resumen de $jugador:
+    $jugador = [
+        "nombre" => $nombreJugador, //string
+        "juegosGanados" => $cantGanados, //int
+        "juegosPerdidos" => $cantPerdidos, //int
+        "juegosEmpatados" => $cantEmpates, //int
+        "puntosAcumulados" => $puntosAcumulados, //int
+    ];
+    return $jugador;
+}
+
 /** Módulo 8: elegirSimbolo - 
  * Solicita al usuario un simbolo y lo valida antes de retornarlo.
  * @return string
@@ -234,7 +290,35 @@ do {
             break;
         case 5:
             //Si el usuario elije la opción 5 - Se muestra el resumen de jugador que se haya ingresado.
-           
+            echo "\n>> RESUMEN DE JUGADOR\n";
+            echo "Nombre del jugador: ";
+            $nombre = strtoupper(trim(fgets(STDIN)));
+            //Se verifica que el nombre ingresado se encuentre registrado dentro de la colección de juegos:
+            $bandera = false;
+            $i = 0;
+            while ($i<count($partidasGuardadas) && $bandera == false) {
+                if (strtoupper($partidasGuardadas[$i]["jugadorCruz"]) == $nombre || strtoupper($partidasGuardadas[$i]["jugadorCirculo"]) == $nombre) {
+                    $registro = 1;
+                    $bandera = true;
+                } else {
+                    $registro = 0;
+                }
+                $i = $i + 1;
+            }
+            //Se imprimen en pantalla los resultados:
+            if ($registro == 1) {
+                $resumen = resumenJugador($partidasGuardadas, $nombre);
+                //print_r($resumen);
+                echo "*************************************\n";
+                echo "Nombre: ".$resumen["nombre"]."\n";
+                echo "Juegos ganados: ".$resumen["juegosGanados"]."\n";
+                echo "Juegos perdidos: ".$resumen["juegosPerdidos"]."\n";
+                echo "Juegos empatados: ".$resumen["juegosEmpatados"]."\n";
+                echo "Puntos acumulados: ".$resumen["puntosAcumulados"]."\n";
+                echo "*************************************\n";
+            } else {
+                echo "ERROR. No se encontraron registros del jugador: ".$nombre."\n";
+            }
             break;
         case 6:
             //Si el usuario elije la opción 6 - Se muestra un listado de juegos ordenados por jugador O.
