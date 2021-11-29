@@ -156,6 +156,36 @@ function calcularPorcentaje($simbolo, $arrayColeccion) {
     }
     return $porcentaje;
 }
+/** Módulo 11: Muestra la coleccion de juegos Ordenado por Jugador O - 
+ * Funcion para comparar y devuelve -1, 0, 1
+ * @param array $a
+ * @param array $b
+ * @return int
+*/
+function comparar($a,$b)
+{
+    //int $resultado
+    $resultado = 0;
+    if ($a['jugadorCirculo'] < $b['jugadorCirculo']){
+        $resultado = -1;
+    }elseif ($b['jugadorCirculo'] < $a['jugadorCirculo']){
+        $resultado = 1;
+    }
+    return $resultado;
+}
+/*
+ * funcion para ordenar por orden alfabetico los juegos de circulo
+ * ordena un array tal que los índices de array mantienen sus correlaciones
+ * con los elementos del array con los que están asociados, 
+ * usando una función de comparación definida por el usuario.
+ * @param array
+ * @return 
+ */
+function juegosCirculosOrdenados ($juegosO){
+    uasort($juegosO, 'comparar');
+    print_r($juegosO);
+}
+
 
 /**********************************/
 /******* PROGRAMA PRINCIPAL *******/
@@ -208,7 +238,7 @@ do {
             break;
         case 6:
             //Si el usuario elije la opción 6 - Se muestra un listado de juegos ordenados por jugador O.
-
+            juegosCirculosOrdenados($partidasGuardadas);
             break;
         case 7:
             //Si el usuario elije la opción 7 - Sale del programa.
