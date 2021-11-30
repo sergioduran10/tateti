@@ -1,5 +1,5 @@
 <?php
-include_once("tateti.php");
+include_once("tatetiAliagaDuranInostroza.php");
 
 /***************************************/
 /******* DATOS DE LOS INTEGRANTES ******/
