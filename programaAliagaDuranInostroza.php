@@ -245,33 +245,25 @@ function juegosGanados($arrayJuegos) {
     return $cantJuegosGanados;
 }
 
-/** Módulo 10: calcularPorcentaje - 
- * Contabiliza la cant. de juegos ganados por símbolo y calcula el porcentaje.
+/** Módulo 10: cantGanadasSimbolo - 
+ * Contabiliza la cant. de juegos ganados por el símbolo elegido por el usuario.
  * @param string $simbolo
  * @param array $arrayColeccion
- * @return float
+ * @return int
  */
-function calcularPorcentaje($simbolo, $arrayColeccion) {
-    //inciso 10 - int $n, $i, $cantGanados, $cantGanadosSimboloX, $cantGanadosSimboloO, float $porcentaje
+function cantGanadasSimbolo($simbolo, $arrayColeccion) {
+    //inciso 10 - int $n, $i, $cantGanados
     $n = count($arrayColeccion);
-    $cantGanados = juegosGanados($arrayColeccion);
-    $cantGanadosSimboloX = 0;
-    $cantGanadosSimboloO = 0;
+    $cantGanados = 0;
     //Se contabilizan los juegos ganados por cada símbolo:
     for ($i=0; $i<$n; $i++) {
-        if ($simbolo == "X" && $arrayColeccion[$i]["puntosCruz"] > $arrayColeccion[$i]["puntosCirculo"]) {
-            $cantGanadosSimboloX = $cantGanadosSimboloX + 1;
-        } elseif ($simbolo == "O" && $arrayColeccion[$i]["puntosCirculo"] > $arrayColeccion[$i]["puntosCruz"]) {
-            $cantGanadosSimboloO = $cantGanadosSimboloO + 1;
+        if ($simbolo == "O" && $arrayColeccion[$i]["puntosCirculo"] > $arrayColeccion[$i]["puntosCruz"]) {
+            $cantGanados = $cantGanados + 1;
+    } elseif ($simbolo == "X" && $arrayColeccion[$i]["puntosCruz"] > $arrayColeccion[$i]["puntosCirculo"]) {
+            $cantGanados = $cantGanados + 1;
         }
     }
-    //Se calcula el porcentaje:
-    if ($cantGanadosSimboloX > 0) {
-        $porcentaje = ($cantGanadosSimboloX * 100)/$cantGanados;
-    } elseif ($cantGanadosSimboloO > 0) {
-        $porcentaje = ($cantGanadosSimboloO * 100)/$cantGanados;
-    }
-    return $porcentaje;
+    return $cantGanados;
 }
 
 /** Módulo 11: comparar - 
@@ -390,9 +382,16 @@ do {
             //Si el usuario elije la opción 4 - Se muestra el porcentaje de juegos ganados por simbolo elegido (X-O).
             echo "\n>> PORCENTAJE DE JUEGOS GANADOS POR SIMBOLO (X-O)\n";
             $simboloElegido = elegirSimbolo();
+            //Se obtiene la cantidad de juegos ganados por el símbolo elegido:
+            $cantidadGanadas = cantGanadasSimbolo($simboloElegido, $partidasGuardadas);
+            //Se calcula el porcentaje:
+            if ($cantidadGanadas > 0) {
+                $porcentaje = ($cantidadGanadas * 100)/juegosGanados($partidasGuardadas);
+            }
+            //Se imprimen en pantalla los resultados:
             echo "\n*************************************\n";
             echo "| Símbolo elegido: ".$simboloElegido."\n";
-            echo "Porcentaje de partidas ganadas por ".$simboloElegido.": ".calcularPorcentaje($simboloElegido, $partidasGuardadas)."%\n";
+            echo "Porcentaje de partidas ganadas por ".$simboloElegido.": ".$porcentaje."%\n";
             echo "*************************************\n";
             break;
         case 5:
