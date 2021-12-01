@@ -1,4 +1,9 @@
 <?php
+/** INCLUDE: incluye y ejecuta un archivo.
+ * include_once: incluye el archivo especificado SÓLO UNA VEZ, si se incluye más veces tan sólo devuelve true.
+ * Es útil en casos donde el mismo fichero se podría incluir y evaluar más de una vez, para evitar así redefinir
+ * funciones o reasignar valores a variables.
+*/
 include_once("tatetiAliagaDuranInostroza.php");
 
 /***************************************/
@@ -345,6 +350,10 @@ $partidasGuardadas = cargarJuegos(); //la variable almacena los datos de la func
 //Proceso:
 do {
     $opcion = seleccionarOpcion();
+    /** SWITCH: Estructura de control alternativa que ejecuta línea por línea un código (al principio, ningún código es ejecutado).
+     * Sólo cuando se encuentra una sentencia CASE cuya expresión se evalúa a un valor que coincida con el valor de la expresión switch,
+     * PHP comienza a ejecutar las sentencias y las continua ejecutando hasta el final del bloque switch (o hasta la primera vez que vea una sentencia BREAK).
+     * */
     switch ($opcion) {
         case 1: 
             //Si el usuario elije la opción 1 - Se inicia el juego Tateti.
