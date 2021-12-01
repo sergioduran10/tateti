@@ -259,7 +259,7 @@ function cantGanadasSimbolo($simbolo, $arrayColeccion) {
     for ($i=0; $i<$n; $i++) {
         if ($simbolo == "O" && $arrayColeccion[$i]["puntosCirculo"] > $arrayColeccion[$i]["puntosCruz"]) {
             $cantGanados = $cantGanados + 1;
-    } elseif ($simbolo == "X" && $arrayColeccion[$i]["puntosCruz"] > $arrayColeccion[$i]["puntosCirculo"]) {
+        } elseif ($simbolo == "X" && $arrayColeccion[$i]["puntosCruz"] > $arrayColeccion[$i]["puntosCirculo"]) {
             $cantGanados = $cantGanados + 1;
         }
     }
