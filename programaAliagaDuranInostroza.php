@@ -86,14 +86,13 @@ function solicitarNumero($min, $max)
 }
 
 /** Módulo 4: mostrarJuego - 
- * Dado un número, la función retorna los resultados del juego guardado en $coleccionJuegos.
+ * Dado un número de juego, la función retorna los resultados del juego guardado en $coleccionJuegos.
+ * @param int $numero
  * @param array $arrayColeccion
  */
-function mostrarJuego($arrayColeccion) {
-    //Teniendo en cuenta el caso 2 - inciso 4 - int $n, $puntosX, $puntosO, $numero
-    $n = count($arrayColeccion) - 1;
-    //Se invoca a la función solicitarNumero para obtener el nro de juego a mostrar:
-    $numero = solicitarNumero(0, $n);
+function mostrarJuego($numero, $arrayColeccion) {
+    //Teniendo en cuenta el caso 2 y 3 - inciso 4 - int $n, $puntosX, $puntosO
+    $n = count($arrayColeccion);
     if ($numero == 0 || $numero <= $n) {
         $puntosX = $arrayColeccion[$numero]["puntosCruz"];
         $puntosO = $arrayColeccion[$numero]["puntosCirculo"];
@@ -297,38 +296,13 @@ function juegosCirculosOrdenados($juegosO) {
     print_r($juegosO);
 }
 
-/** Módulo 13: datosJuego - 
- * Dado un número de juego, la función retorna los resultados del juego guardado en $coleccionJuegos.
- * @param int $numero
- * @param array $arrayColeccion
- */
-function datosJuego($numero, $arrayColeccion) {
-    //Teniendo en cuenta el caso 3 - inciso 4 - int $n, $puntosX, $puntosO
-    $n = count($arrayColeccion);
-    if ($numero == 0 || $numero <= $n) {
-        $puntosX = $arrayColeccion[$numero]["puntosCruz"];
-        $puntosO = $arrayColeccion[$numero]["puntosCirculo"];
-        //Se imprimen los resultados en pantalla (no se muestran los empates):
-        echo "\n*************************************\n";
-        echo "Juego TATETI: ".$numero."";
-        if ($puntosX > $puntosO) {
-            echo " (ganó X)\n";
-        } elseif ($puntosX < $puntosO) {
-            echo " (ganó O)\n";
-        }
-        echo "Jugador X: ".$arrayColeccion[$numero]["jugadorCruz"]." obtuvo ".$puntosX." puntos.\n";
-        echo "Jugador O: ".$arrayColeccion[$numero]["jugadorCirculo"]." obtuvo ".$puntosO." puntos.\n";
-        echo "*************************************\n";
-    }
-}
-
 /**********************************/
 /******* PROGRAMA PRINCIPAL *******/
 /**********************************/
 
 //Declaración de variables:
 /**
- * int $opcion, $numeroIndice, $i
+ * int $opcion, $numeroIndice, $i, $jugadorRegistrado, $nro
  * string $nombre, $simboloElegido
  * float --
  * boolean $salir, $bandera
@@ -347,7 +321,7 @@ do {
      * PHP comienza a ejecutar las sentencias y las continua ejecutando hasta el final del bloque switch (o hasta la primera vez que vea una sentencia BREAK).
      * */
     switch ($opcion) {
-        case 1: 
+        case 1:
             //Si el usuario elije la opción 1 - Se inicia el juego Tateti.
             echo "\n>> ¡JUGUEMOS AL TA TE TI!\n";
             $juego = jugar();
@@ -359,7 +333,8 @@ do {
         case 2:
             //Si el usuario elije la opción 2 - Se muestra un juego almacenado en $coleccionJuegos.
             echo "\n>> MOSTRAR UN JUEGO\n";
-            mostrarJuego($partidasGuardadas);
+            $nro = solicitarNumero(0, count($partidasGuardadas) - 1);
+            mostrarJuego($nro, $partidasGuardadas);
             break;
         case 3: 
             //Si el usuario elije la opción 3 - Se muestra el primer juego ganador del nombre ingresado por el usuario.
@@ -372,11 +347,26 @@ do {
             $numeroIndice = primerJuegoGanado($partidasGuardadas, $nombre);
             echo "| Indice del 1er juego ganado por ".$nombre.": ".$numeroIndice."\n";
             //Se realiza una verificación antes de mostrar el juego:
-            if ($numeroIndice == -1) {
-                echo "El jugador ".$nombre." no ganó ningún juego.\n";
-            } else {
-                datosJuego($numeroIndice, $partidasGuardadas);
+            $bandera = false;
+            $i = 0;
+            while ($i<count($partidasGuardadas) && $bandera == false) {
+                if (strtoupper($partidasGuardadas[$i]["jugadorCruz"]) == $nombre || strtoupper($partidasGuardadas[$i]["jugadorCirculo"]) == $nombre) {
+                    $jugadorRegistrado = 1;
+                    $bandera = true;
+                } else {
+                    $jugadorRegistrado = 0;
+                }
+                $i = $i + 1;
             }
+            if ($numeroIndice == -1) {
+                if ($jugadorRegistrado == 0){
+                    echo "El jugador ".$nombre." NO jugó ningún juego.\n";
+                } else {
+                    echo "El jugador ".$nombre." NO ganó ningún juego.\n";
+                }
+            } else { 
+                mostrarJuego($numeroIndice, $partidasGuardadas);
+            } 
             break;
         case 4:
             //Si el usuario elije la opción 4 - Se muestra el porcentaje de juegos ganados por simbolo elegido (X-O).
